@@ -1,0 +1,29 @@
+services:
+  db:
+    networks:
+      - reservations-network
+    image: postgres
+    ports:
+      - "3432:5432"
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: reservations
+      POSTGRES_USER: reservations
+      POSTGRES_DB: reservations
+    command: -p 3432
+  web:
+    networks:
+      - reservations-network
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - .:/myapp
+    ports:
+      - "13000:3000"
+    depends_on:
+      - db
+
+networks:
+  reservations-network:
+    name: my-shared-db-network

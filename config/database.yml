@@ -20,10 +20,14 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch("DB_HOST") { 'db' } %>
+  port: <%= ENV.fetch("DB_PORT") { '3432' } %>
+  username: <%= ENV.fetch("DB_USERNAME") { 'reservations' } %>
+  password: <%= ENV.fetch("DB_PASSWORD") { 'reservations' } %>
+  database: <%= ENV.fetch("DB_NAME") { 'reservations' } %>
 
 development:
   <<: *default
-  database: reservation_api_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
@@ -50,7 +54,7 @@ development:
   #   debug5, debug4, debug3, debug2, debug1,
   #   log, notice, warning, error, fatal, and panic
   # Defaults to warning.
-  #min_messages: notice
+  min_messages: debug5
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -81,6 +85,4 @@ test:
 #
 production:
   <<: *default
-  database: reservation_api_production
-  username: reservation_api
-  password: <%= ENV["RESERVATION_API_DATABASE_PASSWORD"] %>
+  url: <%= ENV["MY_APP_DATABASE_URL"] %>
