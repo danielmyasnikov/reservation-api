@@ -36,6 +36,15 @@ group :development, :test do
 
   gem "rspec"
   gem "rspec-rails"
+
+  gem 'rswag-api'
+  gem 'rswag-ui'
+
+  gem 'rswag-specs'
+
+  gem 'pry-rails'
+
+  gem "rubocop-rails"
 end
 
 group :development do

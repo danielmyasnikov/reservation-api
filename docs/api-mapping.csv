@@ -1,0 +1,20 @@
+﻿Database,,API,,
+entity,field,format_1,format_2,comments
+reservation,code,reservation_code,code,
+reservation,start_date,start_date,start_date,
+reservation,end_date,end_date,end_date,
+reservation,payout_price,payout_price,expected_payout_amount,"must have been the same for the business, if not it has to be changed"
+reservation,security_price,security_price,listing_security_price_accurate,"must have been the same for the business, if not it has to be changed"
+reservation,total_price,total_price,total_paid_amount_accurate,
+reservation,currency,currency,host_currency,
+reservation,nights,nights,nights,
+reservation,guests,guests,number_of_guests,
+reservation,adults,adults,"""guest_details""[""number_of_adults""]",
+reservation,children,children,"""guest_details""[""number_of_children""]",
+reservation,infants,infants,"""guest_details""[""number_of_infants""]",
+reservation,status,status,status_type,
+,,,,
+guest,first_name,"guest[""first_name""]",guest_email,
+guest,last_name,"guest[""last_name""]",guest_first_name,
+guest,phone,"guest[""phone""]",guest_last_name,
+guest,email,"guest[""email""]",guest_phone_numbers,could be an array

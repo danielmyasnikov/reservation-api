@@ -28,6 +28,7 @@ If that creates too much of noise, please consider upgrading the min_message att
 * How to run the test suite
 
 ```
+docker-compose run -e RAILS_ENV=test web bin/rails db:create
 docker-compose run web bundle exec rspec .
 ```
 
