@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 class Guest < ApplicationRecord
-  has_many :reservations
+  has_many :reservations, dependent: nil
+  validates_associated :reservations
 
-  validates_presence_of :email
+  validates :email, presence: true
 end
