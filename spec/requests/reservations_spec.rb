@@ -161,7 +161,7 @@ RSpec.describe 'Reservations', type: :request do
       xcontext 'malformed request' do
         it 'responds with 400' do
           @params = { reservation: nil }
-          expect(subject).to eq(201)
+          expect(subject).to eq(400)
         end
       end
     end
