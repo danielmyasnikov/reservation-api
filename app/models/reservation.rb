@@ -21,7 +21,8 @@ class Reservation < ApplicationRecord
     errors.add(:code, 'reservation for this guest exist') if dublicate
   end
 
-  def as_json(_opts = {})
-    { only: %i[id guest_id] }
+  def as_json(opts = {})
+    opts.merge!({ only: %i[id guest_id] })
+    super
   end
 end

@@ -21,6 +21,7 @@ class ReservationServiceOne
 
   def call
     @reservation.save!
+    @reservation
   end
 
   def guest_params

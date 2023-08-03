@@ -94,6 +94,7 @@ RSpec.describe 'Reservations', type: :request do
           .and change { reservation.reload.total_price }.from(4700.00).to(3650.00)
 
         expect(response.code.to_i).to eq(201)
+        expect(JSON.parse(response.body)['reservation'].keys.sort).to eq(['id', 'guest_id'].sort)
       end
 
       xcontext 'when malformed request' do
@@ -138,6 +139,7 @@ RSpec.describe 'Reservations', type: :request do
         expect { subject }.to change { Guest.count }.by(1)
                                                     .and change { Reservation.count }.by(1)
         expect(response.code.to_i).to eq(201)
+        expect(JSON.parse(response.body)['reservation'].keys.sort).to eq(['id', 'guest_id'].sort)
       end
 
       it 'updates reservation and guest' do

@@ -20,9 +20,8 @@ class ReservationServiceTwo
   end
 
   def call
-    ApplicationRecord.transaction do
-      @reservation.save!
-    end
+    @reservation.save!
+    @reservation
   end
 
   def guest_params

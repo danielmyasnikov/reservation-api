@@ -6,6 +6,8 @@ class ReservationsController < ApplicationController
                     ReservationServiceOne.call(service_one_params)
                   elsif request_format_two?
                     ReservationServiceTwo.call(service_two_params)
+                  else
+                    raise ActionController::BadRequest.new("Unknow format. Params given: #{params}")
                   end
 
     render json: { reservation: reservation }, status: :created
