@@ -3,7 +3,7 @@ class CreateGuests < ActiveRecord::Migration[7.0]
     create_table :guests do |t|
       t.string :first_name
       t.string :last_name
-      t.text :phone
+      t.text :phone, array: true, null: false, default: []
       t.string :email
 
       t.timestamps

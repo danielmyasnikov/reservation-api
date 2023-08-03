@@ -3,7 +3,13 @@
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
-Things you may want to cover:
+* Implementation logic
+
+Request N4:
+> 4. Parse and save the payloads to a Reservation model that belongs to a Guest
+model. Reservation code and guest email field should be unique.
+
+Decided to parse and save payloads to RequestLogger methods, and parsed parameters became attributes of Reservation and Guest models.
 
 * Ruby version
 
@@ -29,7 +35,6 @@ If that creates too much of noise, please consider upgrading the min_message att
 
 ```
 docker-compose run -e RAILS_ENV=test web bin/rails db:create
+docker-compose run -e RAILS_ENV=test web bin/rails db:migrate
 docker-compose run web bundle exec rspec .
 ```
-
-

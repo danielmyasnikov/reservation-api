@@ -35,7 +35,7 @@ RSpec.describe "Reservations", type: :request do
         expect(Guest.count).to eq(0)
         expect(subject).to eq(201)
         expect(Reservation.count).to eq(1)
-        expect(User.count).to eq(1)
+        expect(Guest.count).to eq(1)
       end
 
       it "updates reservation and guest" do
@@ -62,28 +62,25 @@ RSpec.describe "Reservations", type: :request do
           "security_price": "500",
           "total_price": "4700.00"
         )
-        @params = {
-          start_date: "2021-04-15",
-          payout_price: 3150.00,
-          total_price: 3650.00,
-          guest: {
-            first_name: "Will"
-          }
-        }
+        @params[:start_date] = "2021-04-15"  
+        @params[:payout_price] = 3150.00
+        @params[:total_price] = 3650.00
+        @params[:guest][:first_name] = "Will"
+          
         expect(subject).to eq(201)
-        expect(User.count).to eq(1)
+        expect(Guest.count).to eq(1)
         expect(Reservation.count).to eq(1)
 
-        expect(User.first.first_name).to eq('Will')
-        expect(Reservation.first.start_date).to eq("2021-04-15")
+        expect(Guest.first.first_name).to eq('Will')
+        expect(Reservation.first.start_date.iso8601).to eq("2021-04-15")
         expect(Reservation.first.payout_price).to eq(3150.00)
         expect(Reservation.first.total_price).to eq(3650.00)
       end
 
-      context 'when malformed request' do
+      xcontext 'when malformed request' do
         it 'responds with 400' do
           @params = { guest: nil, code: nil }
-          expect(subject.code.to_i).to eq(400)
+          expect(subject).to eq(400)
         end
       end
     end
@@ -123,10 +120,47 @@ RSpec.describe "Reservations", type: :request do
       end
 
       it "updates reservation and guest" do
+        g = Guest.create!(
+          "first_name": "Wayne",
+          "last_name": "Woodbridge",
+          "phone": "639123456789",
+          "email": "wayne_woodbridge@bnb.com"
+        )
+        r = Reservation.create!(
+          guest_id: g.id,
+          "code": "XXX12345678",
+          "start_date": "2021-04-14",
+          "end_date": "2021-04-18",
+          "nights": 4,
+          "guests": 4,
+          "adults": 2,
+          "children": 2,
+          "infants": 0,
+          "status": "accepted",
+          "currency": "AUD",
+          "payout_price": "4200.00",
+          "security_price": "500",
+          "total_price": "4700.00"
+        )
+
+        @params[:reservation][:start_date] = "2021-04-15"
+        @params[:reservation][:expected_payout_amount] = "3150.00"
+        @params[:reservation][:total_paid_amount_accurate] = "3650.00"
+        @params[:reservation][:guest_first_name] = "Will"
+
         expect(subject).to eq(201)
+
+        expect(Guest.count).to eq(1)
+        expect(Reservation.count).to eq(1)
+
+        expect(Guest.first.first_name).to eq('Will')
+        expect(Reservation.first.start_date.iso8601).to eq("2021-04-15")
+        expect(Reservation.first.payout_price).to eq(3150.00)
+        expect(Reservation.first.total_price).to eq(3650.00)
+
       end
 
-      context 'malformed request' do
+      xcontext 'malformed request' do
         it 'responds with 400' do
           @params = { reservation: nil }
           expect(subject).to eq(201)

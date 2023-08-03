@@ -17,7 +17,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_01_121417) do
   create_table "guests", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
-    t.text "phone"
+    t.text "phone", default: [], null: false, array: true
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -40,7 +40,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_01_121417) do
     t.bigint "guest_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["code", "guest_id"], name: "index_reservations_on_code_and_guest_id", unique: true
     t.index ["guest_id"], name: "index_reservations_on_guest_id"
+    t.index ["status"], name: "index_reservations_on_status"
   end
 
   add_foreign_key "reservations", "guests"

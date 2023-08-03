@@ -18,5 +18,8 @@ class CreateReservations < ActiveRecord::Migration[7.0]
 
       t.timestamps
     end
+
+    add_index :reservations, [:code, :guest_id], unique: true
+    add_index :reservations, :status, using: 'btree'
   end
 end
