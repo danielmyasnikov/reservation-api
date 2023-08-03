@@ -1,0 +1,11 @@
+
+AllCops:
+  Exclude:
+    - spec/**/*.rb
+    - bin/bundle
+    - config/application.rb
+    - db/**/*.rb
+
+Style/Documentation:
+  Enabled: false
+
