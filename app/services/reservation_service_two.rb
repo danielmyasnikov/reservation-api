@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ReservationServiceTwo
   attr_reader :params
 
@@ -25,30 +27,34 @@ class ReservationServiceTwo
 
   def guest_params
     {
-      email:      params[:guest_email],
+      email: params[:guest_email],
       first_name: params[:guest_first_name],
-      last_name:  params[:guest_last_name],
-      phone:      params[:guest_phone_numbers]
+      last_name: params[:guest_last_name],
+      phone: params[:guest_phone_numbers]
     }
   end
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def mapped_params
     {
-      code:           params[:code],
-      start_date:     params[:start_date],
-      end_date:       params[:end_date],
-      nights:         params[:nights],
-      guests:         params[:number_of_guests],
-      adults:         params[:guest_details][:number_of_adults],
-      children:       params[:guest_details][:number_of_children],
-      infants:        params[:guest_details][:number_of_infants],
-      status:         params[:status_type],
-      currency:       params[:host_currency],
-      payout_price:   params[:expected_payout_amount],
+      code: params[:code],
+      start_date: params[:start_date],
+      end_date: params[:end_date],
+      nights: params[:nights],
+      guests: params[:number_of_guests],
+      adults: params[:guest_details][:number_of_adults],
+      children: params[:guest_details][:number_of_children],
+      infants: params[:guest_details][:number_of_infants],
+      status: params[:status_type],
+      currency: params[:host_currency],
+      payout_price: params[:expected_payout_amount],
       security_price: params[:listing_security_price_accurate],
-      total_price:    params[:total_paid_amount_accurate]
+      total_price: params[:total_paid_amount_accurate]
     }
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def create_reservation_params
     mapped_params.merge(guest_attributes: guest_params)
@@ -59,10 +65,9 @@ class ReservationServiceTwo
   end
 
   def found_guest_and_reservation?
-    if @guest = Guest.find_by(email: params[:guest_email]) 
-      if @reservation = @guest.reservations.find_by(code: params[:code])
-        true
-      end
-    end
+    return unless (@guest = Guest.find_by(email: params[:guest_email]))
+    return unless (@reservation = @guest.reservations.find_by(code: params[:code]))
+
+    true
   end
 end

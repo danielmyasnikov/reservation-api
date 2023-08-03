@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::API
   rescue_from ActionController::BadRequest do |ex|
     render json: { error: ex.message }, status: 400

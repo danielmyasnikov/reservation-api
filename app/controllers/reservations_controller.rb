@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class ReservationsController < ApplicationController
   def create_or_update
     reservation = if request_format_one?
-      ReservationServiceOne.call(service_one_params)
-    elsif request_format_two?
-      ReservationServiceTwo.call(service_two_params)
-    end
+                    ReservationServiceOne.call(service_one_params)
+                  elsif request_format_two?
+                    ReservationServiceTwo.call(service_two_params)
+                  end
 
     render json: { reservation: reservation }, status: :created
   end
@@ -19,6 +21,7 @@ class ReservationsController < ApplicationController
     params[:reservation].present? && params[:reservation][:code].present?
   end
 
+  # rubocop:disable Metrics/MethodLength
   def service_one_params
     params.permit(
       :reservation_code,
@@ -34,15 +37,17 @@ class ReservationsController < ApplicationController
       :payout_price,
       :security_price,
       :total_price,
-      guest: [
-        :first_name,
-        :last_name,
-        :phone,
-        :email
+      guest: %i[
+        first_name
+        last_name
+        phone
+        email
       ]
     )
   end
+  # rubocop:enable Metrics/MethodLength
 
+  # rubocop:disable Metrics/MethodLength
   def service_two_params
     params.require(:reservation).permit(
       :code,
@@ -58,12 +63,13 @@ class ReservationsController < ApplicationController
       :guest_email,
       :guest_first_name,
       :guest_last_name,
-      guest_details: [
-        :number_of_adults,
-        :number_of_children,
-        :number_of_infants
+      guest_details: %i[
+        number_of_adults
+        number_of_children
+        number_of_infants
       ],
       guest_phone_numbers: []
     )
   end
+  # rubocop:enable Metrics/MethodLength
 end
