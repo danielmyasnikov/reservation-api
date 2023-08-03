@@ -1,40 +1,76 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+  
 
-* Implementation logic
+### Corrections in the implementation logic:
+
+  
 
 Request N4:
-> 4. Parse and save the payloads to a Reservation model that belongs to a Guest
-model. Reservation code and guest email field should be unique.
 
-Decided to parse and save payloads to RequestLogger methods, and parsed parameters became attributes of Reservation and Guest models.
+>  4. Parse and save the payloads to a Reservation model
 
-* Ruby version
+  
+
+There are multiple ways to save the payload from the endpoint. I decided to save payloads in RequestLogger model, and build Reservation & Guest models from parsed parameters.
+
+  
+
+### Ruby version
+
+  
 
 2.7.8
 
-* System dependencies:
+  
 
-- redis
+### System dependencies:
+
+ 
 - postgresql
+- lefthooks
 
-* Database creation:
+  
+### Logging & Debugging
+
+  
+
+Please note, the database log level in development mode is set to min_messages to debug5, which logs all the information from the database.
+
+  
+
+If that creates too much of noise, please consider upgrading the min_message attribute to debug2 or debug3.
+
+  
+
+### Installation:
+
+Ensure docker daemon is running and run:
 
 ```
-docker-compose run web bin/rails db:schema:load
-docker-compose run web bin/rails db:seeds
+docker-compose build
+docker-compose run web bin/rails db:create
+docker-compose run -e RAILS_ENV=test web bin/rails db:create
+docker-compose run web bin/rails db:migrate
 ```
 
-Please note, the database log level in development mode is set to min_messages: debug5
-
-If that creates too much of noise, please consider upgrading the min_message attribute to debug2 or debug3
+  
 
 * How to run the test suite
 
+  
+
 ```
-docker-compose run -e RAILS_ENV=test web bin/rails db:create
-docker-compose run -e RAILS_ENV=test web bin/rails db:migrate
 docker-compose run web bundle exec rspec .
 ```
+
+### Development
+
+Install githooks integration via lefthook
+
+`lefthook install`
+
+```
+docker-compose run web bundle exec rails c
+```
+
