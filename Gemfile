@@ -42,11 +42,6 @@ group :development, :test do
 
   gem 'factory_bot'
 
-  gem 'rswag-api'
-  gem 'rswag-ui'
-
-  gem 'rswag-specs'
-
   gem 'pry-rails'
 end
 
