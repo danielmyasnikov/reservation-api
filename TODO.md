@@ -2,7 +2,6 @@
 
 
 
-- Move storing of payloads into a separate model - RequestLogger
 - Build production ready settings
 - Add validation on code - email pair
 - JSON-schema to validate request/response

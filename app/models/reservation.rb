@@ -4,7 +4,8 @@ class Reservation < ApplicationRecord
   belongs_to :guest
   accepts_nested_attributes_for :guest
 
-  enum status: %w[accepted other]
+  STATUSES = %w[accepted other].freeze
+  enum status: STATUSES.zip(STATUSES).to_h
 
   validates :code, presence: true, uniqueness: { scope: :guest_id }
 
