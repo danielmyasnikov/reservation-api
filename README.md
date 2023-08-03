@@ -12,7 +12,7 @@ Request N4:
 
   
 
-There are multiple ways to save the payload from the endpoint. I decided to save payloads in RequestLogger model, and build Reservation & Guest models from parsed parameters.
+There are multiple ways to save the payload from the endpoint. Following a cleaner approach, I decided to save payloads in RequestLogger model, and build Reservation & Guest models from parsed parameters.
 
   
 
