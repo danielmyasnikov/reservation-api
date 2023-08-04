@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::API
+  wrap_parameters false
   before_action do
     endpoint = format('%<controller_name>s/%<action_name>s', controller_name: controller_name, action_name: action_name)
 

@@ -18,7 +18,7 @@ class Reservation < ApplicationRecord
                      .where(reservations: { code: code })
                      .any?
 
-    errors.add(:code, 'reservation for this guest exist') if dublicate
+    errors.add(:code, 'is already taken for this guest') if dublicate
   end
 
   def as_json(opts = {})

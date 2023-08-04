@@ -18,9 +18,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_03_034512) do
     t.string "first_name"
     t.string "last_name"
     t.text "phone", default: [], null: false, array: true
-    t.string "email"
+    t.string "email", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_guests_on_email"
   end
 
   create_table "request_loggers", force: :cascade do |t|
@@ -35,16 +36,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_03_034512) do
     t.string "code"
     t.date "start_date"
     t.date "end_date"
-    t.float "payout_price"
-    t.float "security_price"
-    t.float "total_price"
+    t.float "payout_price", default: 0.0
+    t.float "security_price", default: 0.0
+    t.float "total_price", default: 0.0
     t.string "currency"
-    t.integer "nights"
-    t.integer "guests"
-    t.integer "adults"
-    t.integer "children"
-    t.integer "infants"
-    t.string "status"
+    t.integer "nights", default: 0
+    t.integer "guests", default: 0
+    t.integer "adults", default: 0
+    t.integer "children", default: 0
+    t.integer "infants", default: 0
+    t.string "status", default: "draft"
     t.bigint "guest_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

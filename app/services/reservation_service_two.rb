@@ -18,8 +18,8 @@ class ReservationServiceTwo
         end_date: { type: %w[string null] },
         listing_security_price_accurate: { type: %w[string null] },
         host_currency: { type: %w[string null] },
-        nights: { type: %w[string null] },
-        number_of_guests: { type: %w[string null] },
+        nights: { type: %w[string integer null] },
+        number_of_guests: { type: %w[string integer null] },
         status_type: { type: %w[string null] },
         total_paid_amount_accurate: { type: %w[string null] },
         expected_payout_amount: { type: %w[string null] },
@@ -30,9 +30,9 @@ class ReservationServiceTwo
         guest_details: {
           type: 'object',
           properties: {
-            number_of_adults: { type: %w[string null] },
-            number_of_children: { type: %w[string null] },
-            number_of_infants: { type: %w[string null] }
+            number_of_adults: { type: %w[string integer null] },
+            number_of_children: { type: %w[string integer null] },
+            number_of_infants: { type: %w[string integer null] }
           }
         }
       }
