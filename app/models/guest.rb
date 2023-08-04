@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Guest < ApplicationRecord
-  has_many :reservations, dependent: nil
+  has_many :reservations, dependent: :destroy
   validates_associated :reservations
   accepts_nested_attributes_for :reservations
 

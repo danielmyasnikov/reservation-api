@@ -75,6 +75,8 @@ RSpec.describe 'Reservations', type: :request do
         expect { subject }.to change { Guest.count }.by(1)
                           .and change { Reservation.count }.by(1)
         expect(response.code.to_i).to eq(201)
+
+        expect(Guest.first.phone).to eq(['639123456789'])
       end
 
       context "when guest exists" do
@@ -84,10 +86,13 @@ RSpec.describe 'Reservations', type: :request do
         end
 
         it 'creates another reservation for the same guest & reservation code' do
-          @params[:email] = @guest.email
+          @params[:guest][:email] = @guest.email
+          @params[:guest][:phone] = '999'
           @params[:reservation_code] = 'III567898764321'
 
           expect { subject }.to change { Reservation.count }.by(1)
+
+          expect(@guest.reload.phone).to eq(['999'])
           expect(response.code.to_i).to eq(201)
           expect(Guest.count).to eq(1) # NOTE: number of guests is 1 because, it was found by email
           expect(Reservation.count).to eq(2) # NOTE: number of reservation is 2 because a new was created
@@ -100,8 +105,10 @@ RSpec.describe 'Reservations', type: :request do
           @params[:guest][:first_name] = 'Will'
           @params[:children] = nil
           @params[:adults] = 1
-          expect { subject }
-            .to change { @guest.reload.first_name }.from('Wayne').to('Will')
+          @params[:guest][:phone] = '999' 
+
+          expect { subject }.to change { @guest.reload.first_name }.from('Wayne').to('Will')
+            .and change { @guest.reload.phone }.from(['639123456789']).to(['999'])
             .and change { @reservation.reload.start_date.iso8601 }.from('2021-04-14').to('2021-04-15')
             .and change { @reservation.reload.payout_price }.from(4200.00).to(3150.00)
             .and change { @reservation.reload.children }.from(2).to(nil)
@@ -155,6 +162,7 @@ RSpec.describe 'Reservations', type: :request do
         expect { subject }.to change { Guest.count }.by(1)
                                                     .and change { Reservation.count }.by(1)
         expect(response.code.to_i).to eq(201)
+        expect(Guest.first.phone).to eq(['639123456789', '639123456789'])
         expect(JSON.parse(response.body)['reservation'].keys.sort).to eq(["id", "reservations"].sort)
       end
 

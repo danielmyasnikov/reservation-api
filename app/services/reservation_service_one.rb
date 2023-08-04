@@ -2,10 +2,10 @@
 
 # rubocop:disable Metrics/ClassLength
 class ReservationServiceOne
-  attr_reader :params
+  attr_reader :params, :dub_permitted_params
 
   def valid?
-    JSON::Validator.validate(valid_schema, permit_params.to_h, strict: true)
+    JSON::Validator.validate(valid_schema, dub_permitted_params.to_h, strict: true)
   end
 
   # rubocop:disable Metrics/MethodLength
@@ -41,7 +41,7 @@ class ReservationServiceOne
   # rubocop:enable Metrics/MethodLength
 
   # rubocop:disable Metrics/MethodLength
-  def permit_params
+  def permitted_params
     params.permit(
       :reservation_code,
       :start_date,
@@ -68,6 +68,7 @@ class ReservationServiceOne
 
   def initialize(params)
     @params = params
+    @dub_permitted_params = permitted_params.dup
   end
 
   def call
@@ -83,27 +84,27 @@ class ReservationServiceOne
   end
 
   def guest_params
-    permit_params[:guest][:phone] = [permit_params[:guest][:phone]] unless permit_params[:guest][:phone].is_a?(Array)
-    permit_params[:guest]
+    dub_permitted_params[:guest][:phone] = [dub_permitted_params[:guest][:phone]] unless dub_permitted_params[:guest][:phone].is_a?(Array)
+    dub_permitted_params[:guest]
   end
 
   # rubocop:disable Metrics/AbcSize
   # rubocop:disable Metrics/MethodLength
   def reservation_mapped_params
     {
-      code: permit_params[:reservation_code],
-      start_date: permit_params[:start_date],
-      end_date: permit_params[:end_date],
-      nights: permit_params[:nights],
-      guests: permit_params[:guests],
-      adults: permit_params[:adults],
-      children: permit_params[:children],
-      infants: permit_params[:infants],
-      status: permit_params[:status],
-      currency: permit_params[:currency],
-      payout_price: permit_params[:payout_price],
-      security_price: permit_params[:security_price],
-      total_price: permit_params[:total_price]
+      code: dub_permitted_params[:reservation_code],
+      start_date: dub_permitted_params[:start_date],
+      end_date: dub_permitted_params[:end_date],
+      nights: dub_permitted_params[:nights],
+      guests: dub_permitted_params[:guests],
+      adults: dub_permitted_params[:adults],
+      children: dub_permitted_params[:children],
+      infants: dub_permitted_params[:infants],
+      status: dub_permitted_params[:status],
+      currency: dub_permitted_params[:currency],
+      payout_price: dub_permitted_params[:payout_price],
+      security_price: dub_permitted_params[:security_price],
+      total_price: dub_permitted_params[:total_price]
     }
   end
   # rubocop:enable Metrics/AbcSize
