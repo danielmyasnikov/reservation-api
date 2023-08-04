@@ -52,3 +52,5 @@ group :development do
 
   gem 'lefthook'
 end
+
+gem 'json-schema'

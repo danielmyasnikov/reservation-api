@@ -6,16 +6,16 @@ class CreateReservations < ActiveRecord::Migration[7.0]
       t.string :code
       t.date :start_date
       t.date :end_date
-      t.float :payout_price
-      t.float :security_price
-      t.float :total_price
+      t.float :payout_price, default: 0.0
+      t.float :security_price, default: 0.0
+      t.float :total_price, default: 0.0
       t.string :currency
-      t.integer :nights
-      t.integer :guests
-      t.integer :adults
-      t.integer :children
-      t.integer :infants
-      t.string :status
+      t.integer :nights, default: 0
+      t.integer :guests, default: 0
+      t.integer :adults, default: 0
+      t.integer :children, default: 0
+      t.integer :infants, default: 0
+      t.string :status, default: :draft
       t.references :guest, null: false, foreign_key: true
 
       t.timestamps
